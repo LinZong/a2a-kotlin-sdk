@@ -4,8 +4,8 @@ import moe.nemesiss.a2a.domain.*
 import moe.nemesiss.a2a.transport.A2AServerTransport
 import java.util.concurrent.atomic.AtomicBoolean
 
-open class DefaultA2AServer(protected val transport: A2AServerTransport,
-                            protected val taskManager: TaskManager) : A2AServer {
+abstract class AbstractA2AServer(protected val transport: A2AServerTransport<*>,
+                                 protected val taskManager: TaskManager) : A2AServer {
 
 
     private val started = AtomicBoolean(false)
@@ -83,12 +83,6 @@ open class DefaultA2AServer(protected val transport: A2AServerTransport,
     override fun onGetTaskPushNotification(request: GetTaskPushNotificationRequest): GetTaskPushNotificationResponse {
         ensureInitialized()
         return taskManager.onGetTaskPushNotification(request)
-    }
-
-    override fun sendTaskPushNotification(endpoint: URITransportEndpoint,
-                                          request: SendTaskPushNotificationRequest): SendTaskPushNotificationResponse {
-        ensureInitialized()
-        return transport.sendMessage(endpoint, request, SendTaskPushNotificationResponse::class.java)
     }
 
     protected fun ensureInitialized() {

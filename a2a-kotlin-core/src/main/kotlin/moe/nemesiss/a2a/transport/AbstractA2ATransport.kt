@@ -3,7 +3,7 @@ package moe.nemesiss.a2a.transport
 import moe.nemesiss.a2a.domain.*
 import moe.nemesiss.a2a.serialization.JSONRPCMessageSerializer
 
-abstract class AbstractA2ATransport<E : TransportEndpoint> : A2ATransport<E> {
+abstract class AbstractA2ATransport<in E : TransportEndpoint> : A2ATransport<E> {
 
     private val messageHandlers = mutableMapOf<String, HandlerMapping<JSONRPCMessage, JSONRPCResponse>>()
 

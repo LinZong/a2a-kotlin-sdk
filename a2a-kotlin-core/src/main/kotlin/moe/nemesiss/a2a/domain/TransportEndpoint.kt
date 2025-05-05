@@ -38,6 +38,3 @@ open class URITransportEndpoint : TransportEndpoint {
         return "URITransportEndpoint(uri=$uri)"
     }
 }
-
-class LocalTransportEndpoint(host: String) :
-        URITransportEndpoint(scheme = "local", host = host, port = -1, path = "/")

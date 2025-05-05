@@ -2,7 +2,7 @@ package moe.nemesiss.a2a.transport
 
 import moe.nemesiss.a2a.domain.*
 
-interface A2ATransport<E : TransportEndpoint> {
+interface A2ATransport<in E : TransportEndpoint> {
 
     fun start()
 

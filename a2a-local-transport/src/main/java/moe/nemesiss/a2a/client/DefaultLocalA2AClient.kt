@@ -3,7 +3,7 @@ package moe.nemesiss.a2a.client
 import moe.nemesiss.a2a.domain.*
 import moe.nemesiss.a2a.transport.LocalA2AClientTransport
 
-class DefaultLocalA2AClient(transport: LocalA2AClientTransport) : DefaultA2AClient(transport) {
+class DefaultLocalA2AClient(transport: LocalA2AClientTransport) : AbstractA2AClient(transport) {
 
 
     private var taskNotificationCallback: A2ATaskNotificationCallback? = null

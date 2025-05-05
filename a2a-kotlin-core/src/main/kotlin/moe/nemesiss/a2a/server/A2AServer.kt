@@ -21,6 +21,6 @@ interface A2AServer {
 
     fun onGetTaskPushNotification(request: GetTaskPushNotificationRequest): GetTaskPushNotificationResponse
 
-    fun sendTaskPushNotification(endpoint: URITransportEndpoint,
+    fun sendTaskPushNotification(url: String,
                                  request: SendTaskPushNotificationRequest): SendTaskPushNotificationResponse
 }

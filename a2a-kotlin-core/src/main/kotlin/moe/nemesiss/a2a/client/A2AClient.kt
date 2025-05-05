@@ -4,15 +4,16 @@ import moe.nemesiss.a2a.domain.*
 
 interface A2AClient {
 
-    fun sendTask(params: TaskSendParams): SendTaskResponse
+    fun sendTask(params: SendTaskRequest): SendTaskResponse
 
-    fun sendTaskStreaming(params: TaskSendParams, callback: StreamResponseCallback<SendTaskStreamingResponse>)
+    fun sendTaskStreaming(params: SendTaskStreamingRequest, callback: StreamResponseCallback<SendTaskStreamingResponse>)
 
-    fun getTask(params: TaskQueryParams): GetTaskResponse
+    fun getTask(params: GetTaskRequest): GetTaskResponse
 
-    fun cancelTask(params: TaskIdParams): CancelTaskResponse
+    fun cancelTask(params: CancelTaskRequest): CancelTaskResponse
 
-    fun setTaskPushNotification(params: TaskPushNotificationConfig): SetTaskPushNotificationResponse
+    fun setTaskPushNotification(params: SetTaskPushNotificationRequest): SetTaskPushNotificationResponse
 
-    fun getTaskPushNotification(params: TaskIdParams): GetTaskPushNotificationResponse
+    fun getTaskPushNotification(params: GetTaskPushNotificationRequest): GetTaskPushNotificationResponse
+
 }
