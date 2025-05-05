@@ -2,6 +2,7 @@ package moe.nemesiss.a2a.transport
 
 import moe.nemesiss.a2a.domain.*
 import moe.nemesiss.a2a.host.LocalA2AHost
+import moe.nemesiss.a2a.serialization.JSONRPCMessageSerializer
 
 abstract class AbstractLocalA2ATransport(protected val host: LocalA2AHost) : AbstractA2ATransport() {
 

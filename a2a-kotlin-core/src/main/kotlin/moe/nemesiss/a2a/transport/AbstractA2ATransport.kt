@@ -1,12 +1,13 @@
 package moe.nemesiss.a2a.transport
 
 import moe.nemesiss.a2a.domain.*
+import moe.nemesiss.a2a.serialization.JSONRPCMessageSerializer
 
 abstract class AbstractA2ATransport : A2ATransport {
 
-    protected val messageHandlers = mutableMapOf<String, HandlerMapping<JSONRPCMessage, JSONRPCResponse>>()
+    private val messageHandlers = mutableMapOf<String, HandlerMapping<JSONRPCMessage, JSONRPCResponse>>()
 
-    protected val streamMessageHandlers = mutableMapOf<String, StreamHandlerMapping<JSONRPCMessage, JSONRPCResponse>>()
+    private val streamMessageHandlers = mutableMapOf<String, StreamHandlerMapping<JSONRPCMessage, JSONRPCResponse>>()
 
 
     @Suppress("UNCHECKED_CAST")
