@@ -5,7 +5,7 @@ import moe.nemesiss.a2a.host.LocalA2AHost
 import moe.nemesiss.a2a.serialization.JSONRPCMessageSerializer
 
 abstract class AbstractLocalA2ATransport(protected val host: LocalA2AHost) :
-        AbstractA2ATransport<LocalTransportEndpoint>() {
+        AbstractA2ATransport<LocalTransportEndpoint>(), LocalA2ATransport {
 
     override fun <T : JSONRPCResponse> sendMessage(endpoint: LocalTransportEndpoint,
                                                    message: JSONRPCRequest,
@@ -37,5 +37,44 @@ abstract class AbstractLocalA2ATransport(protected val host: LocalA2AHost) :
                                             callback.onError(t)
                                         }
                                     })
+    }
+
+
+    override fun handleMessage(message: String): String {
+        val req = JSONRPCMessageSerializer.deserialize(message, JSONRPCRequest::class.java)
+        val hm =
+            messageHandlers[req.method] ?: return JSONRPCMessageSerializer.serialize(JSONRPCResponse(id = req.id,
+                                                                                                     error = UnsupportedOperationError(
+                                                                                                         message = "No handler for method: ${req.method}")))
+
+
+        val requestMessage = JSONRPCMessageSerializer.deserialize(message, hm.requestType)
+        val responseMessage = hm.handler.handle(requestMessage)
+        return JSONRPCMessageSerializer.serialize(responseMessage)
+    }
+
+    override fun handleStreamingMessage(message: String, callback: StreamResponseCallback<String>) {
+        val req = JSONRPCMessageSerializer.deserialize(message, JSONRPCRequest::class.java)
+        val hm =
+            streamMessageHandlers[req.method] ?: return run {
+                callback.onComplete(JSONRPCMessageSerializer.serialize(JSONRPCResponse(id = req.id,
+                                                                                       error = UnsupportedOperationError(
+                                                                                           message = "No handler for method: ${req.method}"))))
+            }
+
+        val requestMessage = JSONRPCMessageSerializer.deserialize(message, hm.requestType)
+        hm.handler.handle(requestMessage, object : StreamResponseCallback<JSONRPCResponse> {
+            override fun onNext(value: JSONRPCResponse) {
+                callback.onNext(JSONRPCMessageSerializer.serialize(value))
+            }
+
+            override fun onComplete(value: JSONRPCResponse) {
+                callback.onComplete(JSONRPCMessageSerializer.serialize(value))
+            }
+
+            override fun onError(t: Throwable) {
+                callback.onError(t)
+            }
+        })
     }
 }
