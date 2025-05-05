@@ -8,7 +8,7 @@ open class DefaultA2AServer(protected val transport: A2AServerTransport,
                             protected val taskManager: TaskManager) : A2AServer {
 
 
-    private val initialized = AtomicBoolean(false)
+    private val started = AtomicBoolean(false)
 
     override fun start() {
         taskManager.onServerAttached(this)
@@ -46,12 +46,12 @@ open class DefaultA2AServer(protected val transport: A2AServerTransport,
 
 
         transport.start()
-        initialized.set(true)
+        started.set(true)
     }
 
     override fun stop() {
         transport.stop()
-        initialized.set(false)
+        started.set(false)
     }
 
     override fun onGetTask(request: GetTaskRequest): GetTaskResponse {
@@ -85,13 +85,13 @@ open class DefaultA2AServer(protected val transport: A2AServerTransport,
         return taskManager.onGetTaskPushNotification(request)
     }
 
-    override fun sendTaskPushNotification(endpoint: TransportEndpoint,
+    override fun sendTaskPushNotification(endpoint: URITransportEndpoint,
                                           request: SendTaskPushNotificationRequest): SendTaskPushNotificationResponse {
         ensureInitialized()
         return transport.sendMessage(endpoint, request, SendTaskPushNotificationResponse::class.java)
     }
 
     protected fun ensureInitialized() {
-        require(initialized.get()) { "Server hasn't been initialized. Please call 'init' method before using any server method." }
+        require(started.get()) { "Server hasn't been started. Please call 'start' method before using any server method." }
     }
 }

@@ -2,17 +2,17 @@ package moe.nemesiss.a2a.transport
 
 import moe.nemesiss.a2a.domain.*
 
-interface A2ATransport {
+interface A2ATransport<E : TransportEndpoint> {
 
     fun start()
 
     fun stop()
 
-    fun <T : JSONRPCResponse> sendMessage(endpoint: TransportEndpoint,
+    fun <T : JSONRPCResponse> sendMessage(endpoint: E,
                                           message: JSONRPCRequest,
                                           responseType: Class<T>): T
 
-    fun sendStreamingRequest(endpoint: TransportEndpoint,
+    fun sendStreamingRequest(endpoint: E,
                              message: SendTaskStreamingRequest,
                              callback: StreamResponseCallback<SendTaskStreamingResponse>)
 

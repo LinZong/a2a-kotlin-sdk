@@ -4,9 +4,10 @@ import moe.nemesiss.a2a.domain.*
 import moe.nemesiss.a2a.host.LocalA2AHost
 import moe.nemesiss.a2a.serialization.JSONRPCMessageSerializer
 
-abstract class AbstractLocalA2ATransport(protected val host: LocalA2AHost) : AbstractA2ATransport() {
+abstract class AbstractLocalA2ATransport(protected val host: LocalA2AHost) :
+        AbstractA2ATransport<LocalTransportEndpoint>() {
 
-    override fun <T : JSONRPCResponse> sendMessage(endpoint: TransportEndpoint,
+    override fun <T : JSONRPCResponse> sendMessage(endpoint: LocalTransportEndpoint,
                                                    message: JSONRPCRequest,
                                                    responseType: Class<T>): T {
         val peer =
@@ -15,7 +16,7 @@ abstract class AbstractLocalA2ATransport(protected val host: LocalA2AHost) : Abs
         return JSONRPCMessageSerializer.deserialize(responseJson, responseType)
     }
 
-    override fun sendStreamingRequest(endpoint: TransportEndpoint,
+    override fun sendStreamingRequest(endpoint: LocalTransportEndpoint,
                                       message: SendTaskStreamingRequest,
                                       callback: StreamResponseCallback<SendTaskStreamingResponse>) {
         val peer =
@@ -37,5 +38,4 @@ abstract class AbstractLocalA2ATransport(protected val host: LocalA2AHost) : Abs
                                         }
                                     })
     }
-
 }

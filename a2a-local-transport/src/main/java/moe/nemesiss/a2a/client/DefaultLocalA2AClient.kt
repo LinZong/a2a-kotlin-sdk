@@ -42,7 +42,7 @@ class DefaultLocalA2AClient(transport: LocalA2AClientTransport) : DefaultA2AClie
         val clientNotifyEndpoint = clientTransport.clientNotifyEndpoint
         require(clientNotifyEndpoint != null) { "clientNotifyEndpoint in LocalA2AClientTransport should not be null." }
         val finalParams =
-            params.copy(pushNotificationConfig = params.pushNotificationConfig.copy(url = clientNotifyEndpoint.getUri()))
+            params.copy(pushNotificationConfig = params.pushNotificationConfig.copy(url = clientNotifyEndpoint.getUriString()))
         return finalParams
     }
 

@@ -1,3 +1,5 @@
 package moe.nemesiss.a2a.transport
 
-interface A2AServerTransport : A2ATransport
+import moe.nemesiss.a2a.domain.TransportEndpoint
+
+interface A2AServerTransport<E : TransportEndpoint> : A2ATransport<E>
