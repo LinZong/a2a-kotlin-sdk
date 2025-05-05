@@ -16,16 +16,11 @@ class DefaultLocalA2AClient(transport: LocalA2AClientTransport) : AbstractA2ACli
             TaskNotificationMessageHandler()))
     }
 
-    override fun setTaskPushNotification(params: TaskPushNotificationConfig): SetTaskPushNotificationResponse {
+
+    override fun setTaskPushNotification(params: SetTaskPushNotificationRequest): SetTaskPushNotificationResponse {
         val finalParams = correctNotificationUrlToClientNotifyEndpoint(params)
-        return transport.sendMessage(SetTaskPushNotificationRequest(params = finalParams),
+        return transport.sendMessage(finalParams,
                                      SetTaskPushNotificationResponse::class.java)
-    }
-
-    override fun getTaskPushNotification(params: TaskIdParams): GetTaskPushNotificationResponse {
-        return transport.sendMessage(GetTaskPushNotificationRequest(params = params),
-                                     GetTaskPushNotificationResponse::class.java)
-
     }
 
 
@@ -37,12 +32,14 @@ class DefaultLocalA2AClient(transport: LocalA2AClientTransport) : AbstractA2ACli
         this.taskNotificationCallback = null
     }
 
-    private fun correctNotificationUrlToClientNotifyEndpoint(params: TaskPushNotificationConfig): TaskPushNotificationConfig {
+    private fun correctNotificationUrlToClientNotifyEndpoint(params: SetTaskPushNotificationRequest): SetTaskPushNotificationRequest {
         val clientTransport = transport as LocalA2AClientTransport
         val clientNotifyEndpoint = clientTransport.clientNotifyEndpoint
         require(clientNotifyEndpoint != null) { "clientNotifyEndpoint in LocalA2AClientTransport should not be null." }
         val finalParams =
-            params.copy(pushNotificationConfig = params.pushNotificationConfig.copy(url = clientNotifyEndpoint.getUriString()))
+            params.copy(params =
+                        params.params.copy(pushNotificationConfig =
+                                           params.params.pushNotificationConfig.copy(url = clientNotifyEndpoint.getUriString())))
         return finalParams
     }
 
