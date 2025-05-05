@@ -2,7 +2,7 @@ package moe.nemesiss.a2a.transport
 
 import moe.nemesiss.a2a.domain.*
 
-interface A2AClientTransport<in E : TransportEndpoint> : A2ATransport<E> {
+interface A2AClientTransport : A2ATransport {
 
     /**
      * Sends a JSON-RPC request message and retrieves the corresponding response of a specified type.

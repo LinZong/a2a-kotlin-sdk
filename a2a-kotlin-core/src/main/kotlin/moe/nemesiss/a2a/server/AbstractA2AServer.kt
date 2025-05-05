@@ -4,7 +4,7 @@ import moe.nemesiss.a2a.domain.*
 import moe.nemesiss.a2a.transport.A2AServerTransport
 import java.util.concurrent.atomic.AtomicBoolean
 
-abstract class AbstractA2AServer(protected val transport: A2AServerTransport<*>,
+abstract class AbstractA2AServer(protected val transport: A2AServerTransport,
                                  protected val taskManager: TaskManager) : A2AServer {
 
 

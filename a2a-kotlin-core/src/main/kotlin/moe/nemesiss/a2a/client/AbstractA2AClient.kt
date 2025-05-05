@@ -3,7 +3,7 @@ package moe.nemesiss.a2a.client
 import moe.nemesiss.a2a.domain.*
 import moe.nemesiss.a2a.transport.A2AClientTransport
 
-abstract class AbstractA2AClient(protected val transport: A2AClientTransport<*>) : A2AClient {
+abstract class AbstractA2AClient(protected val transport: A2AClientTransport) : A2AClient {
 
 
     override fun sendTask(params: SendTaskRequest): SendTaskResponse {

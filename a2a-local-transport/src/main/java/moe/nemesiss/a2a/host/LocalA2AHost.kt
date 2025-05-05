@@ -1,31 +1,31 @@
 package moe.nemesiss.a2a.host
 
-import moe.nemesiss.a2a.domain.LocalA2ATransport
+import moe.nemesiss.a2a.domain.LocalA2AServerTransport
 import moe.nemesiss.a2a.domain.LocalTransportEndpoint
 
 class LocalA2AHost {
 
 
-    private val routes = mutableMapOf<String, LocalA2ATransport>()
+    private val routes = mutableMapOf<String, LocalA2AServerTransport>()
 
     /**
-     * Register a [LocalA2ATransport] with corresponding [LocalTransportEndpoint].
+     * Register a [LocalA2AServerTransport] with corresponding [LocalTransportEndpoint].
      */
-    fun registerTransport(endpoint: LocalTransportEndpoint, transport: LocalA2ATransport) {
+    fun registerTransport(endpoint: LocalTransportEndpoint, transport: LocalA2AServerTransport) {
         routes[endpoint.getUriString()] = transport
     }
 
     /**
-     * Resolve [LocalA2ATransport] from specific [LocalTransportEndpoint].
+     * Resolve [LocalA2AServerTransport] from specific [LocalTransportEndpoint].
      */
-    fun resolveTransport(endpoint: LocalTransportEndpoint): LocalA2ATransport? {
+    fun resolveTransport(endpoint: LocalTransportEndpoint): LocalA2AServerTransport? {
         return routes[endpoint.getUriString()]
     }
 
     /**
-     * Remove [LocalA2ATransport] from host corresponding to the presented [LocalTransportEndpoint].
+     * Remove [LocalA2AServerTransport] from host corresponding to the presented [LocalTransportEndpoint].
      */
-    fun removeTransport(endpoint: LocalTransportEndpoint): LocalA2ATransport? {
+    fun removeTransport(endpoint: LocalTransportEndpoint): LocalA2AServerTransport? {
         return routes.remove(endpoint.getUriString())
     }
 

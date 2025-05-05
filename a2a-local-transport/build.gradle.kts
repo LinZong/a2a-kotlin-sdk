@@ -15,3 +15,21 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+java {
+    withSourcesJar()
+}
+
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+            pom {
+                name.set("A2A Transport Implementation - Local")
+                description.set("A2A transport implementation that support transferring JSON-RPC message through direct method call.")
+                url.set("https://github.com/LinZong/a2a-kotlin-sdk/")
+            }
+        }
+    }
+}
