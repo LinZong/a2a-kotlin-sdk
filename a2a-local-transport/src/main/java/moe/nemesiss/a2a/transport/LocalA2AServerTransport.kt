@@ -5,7 +5,7 @@ import moe.nemesiss.a2a.host.LocalA2AHost
 
 class LocalA2AServerTransport(host: LocalA2AHost,
                               val listenEndpoint: LocalTransportEndpoint) : AbstractLocalA2ATransport(host),
-                                                                            A2AServerTransport {
+                                                                            A2AServerTransport<LocalTransportEndpoint> {
     override fun start() {
         host.registerTransport(listenEndpoint, this)
     }

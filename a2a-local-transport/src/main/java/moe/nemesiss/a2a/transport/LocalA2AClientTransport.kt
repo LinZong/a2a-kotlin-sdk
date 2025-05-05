@@ -6,7 +6,7 @@ import moe.nemesiss.a2a.host.LocalA2AHost
 class LocalA2AClientTransport(host: LocalA2AHost,
                               val serverEndpoint: LocalTransportEndpoint,
                               val clientNotifyEndpoint: LocalTransportEndpoint? = null) :
-        AbstractLocalA2ATransport(host), A2AClientTransport {
+        AbstractLocalA2ATransport(host), A2AClientTransport<LocalTransportEndpoint> {
     override fun start() {
         clientNotifyEndpoint?.let { host.registerTransport(it, this) }
     }
