@@ -18,9 +18,11 @@ class DefaultNotifiableLocalA2AClientTransport(host: LocalA2AHost,
                                                               SendTaskPushNotificationRequest::class.java,
                                                               SendTaskPushNotificationResponse::class.java,
                                                               TaskNotificationHandler()))
+        serverTransport.start()
     }
 
     override fun stop() {
+        serverTransport.stop()
         super.stop()
     }
 
